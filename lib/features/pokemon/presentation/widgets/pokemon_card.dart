@@ -10,20 +10,20 @@ class PokemonCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       elevation: 3,
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(child: Image.network(pokemon.image, fit: BoxFit.contain)),
-            const SizedBox(height: 8),
-            Text(
-              pokemon.name.toUpperCase(),
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontWeight: FontWeight.bold),
+            SizedBox(
+              width: 100,
+              height: 100,
+              child: Image.network(pokemon.image, fit: BoxFit.contain),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 12),
+            Text(pokemon.name.toUpperCase(), textAlign: TextAlign.center),
             Text('R\$ ${pokemon.price.toStringAsFixed(2)}'),
           ],
         ),
