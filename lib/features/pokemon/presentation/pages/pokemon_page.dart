@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokestore/features/pokemon/presentation/widgets/pokemon_card.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/pokemon_provider.dart';
@@ -20,16 +21,19 @@ class PokemonPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Pokestore')),
-      body: ListView.builder(
+      body: GridView.builder(
+        padding: const EdgeInsets.all(12),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 3 / 4,
+          crossAxisSpacing: 12,
+          mainAxisSpacing: 12,
+        ),
         itemCount: provider.pokemons.length,
         itemBuilder: (context, index) {
           final pokemon = provider.pokemons[index];
 
-          return ListTile(
-            leading: Image.network(pokemon.image, width: 50, height: 50),
-            title: Text(pokemon.name),
-            subtitle: Text('#${pokemon.id}'),
-          );
+          return PokemonCard(pokemon: pokemon);
         },
       ),
     );
