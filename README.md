@@ -1,17 +1,57 @@
-# pokestore
+# 🛒 PokeStore Flutter
 
-A new Flutter project.
+![Flutter](https://img.shields.io/badge/Flutter-3.44-blue)
+![Dart](https://img.shields.io/badge/Dart-3.12-blue)
+![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow)
 
-## Getting Started
+Aplicação desenvolvida em Flutter para estudo de arquitetura, consumo de APIs REST e gerenciamento de estado.
 
-This project is a starting point for a Flutter application.
+Os dados são obtidos através da PokeAPI e utilizados para simular um catálogo de produtos.
 
-A few resources to get you started if this is your first Flutter project:
+## 🚀 Tecnologias
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+- Flutter
+- Dart
+- Dio
+- Provider
+- Clean Architecture
+- Git e GitHub
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 📱 Funcionalidades Planejadas
+
+- [x] Criação do projeto
+- [x] Configuração do GitHub
+- [ ] Consumo da PokeAPI
+- [ ] Listagem de produtos
+- [ ] Tela de detalhes
+- [ ] Busca de produtos
+- [ ] Tratamento de erros
+- [ ] Gerenciamento de estado com Provider
+
+## 🏗️ Arquitetura
+
+```text
+lib/
+├── core/
+├── features/
+│   └── pokemon/
+│       ├── data/
+│       ├── domain/
+│       └── presentation/
+└── main.dart
+```
+
+## 🌐 API
+
+https://pokeapi.co/
+
+## ▶️ Executando o projeto
+
+```bash
+flutter pub get
+flutter run
+```
+
+## 🎯 Objetivo
+
+Este projeto foi criado para atualização técnica em Flutter e construção de portfólio, aplicando conceitos utilizados em projetos profissionais.
