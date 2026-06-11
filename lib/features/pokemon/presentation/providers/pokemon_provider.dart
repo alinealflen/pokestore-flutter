@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'dart:collection';
 import '../../domain/entities/pokemon.dart';
 import '../../domain/usecases/get_pokemons.dart';
 
@@ -10,7 +10,7 @@ class PokemonProvider extends ChangeNotifier {
 
   final List<Pokemon> _pokemons = [];
 
-  List<Pokemon> get pokemons => _pokemons;
+  UnmodifiableListView<Pokemon> get pokemons => UnmodifiableListView(_pokemons);
 
   bool _isLoading = false;
 
