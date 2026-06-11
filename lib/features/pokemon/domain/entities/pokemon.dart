@@ -2,6 +2,12 @@ class Pokemon {
   final int id;
   final String name;
   final String image;
+  final double price;
 
-  Pokemon({required this.id, required this.name, required this.image});
+  Pokemon({
+    required this.id,
+    required this.name,
+    required this.image,
+    required this.price,
+  });
 }
