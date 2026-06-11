@@ -5,6 +5,7 @@ import 'package:pokestore/features/pokemon/data/repositories/pokemon_repository_
 import 'package:pokestore/features/pokemon/domain/usecases/get_pokemons.dart';
 import 'package:pokestore/features/pokemon/presentation/providers/pokemon_provider.dart';
 import 'package:provider/provider.dart';
+import 'features/pokemon/presentation/pages/pokemon_page.dart';
 
 void main() {
   final dio = Dio(
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
       ),
-      home: const Scaffold(body: Center(child: Text('Pokestore'))),
+      home: const PokemonPage(),
     );
   }
 }
