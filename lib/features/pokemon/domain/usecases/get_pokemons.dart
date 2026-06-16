@@ -5,8 +5,7 @@ class GetPokemons {
   final PokemonRepository repository;
 
   GetPokemons(this.repository);
-
-  Future<List<Pokemon>> call() async {
-    return await repository.getPokemons();
+  Future<List<Pokemon>> call({required int offset}) async {
+    return await repository.getPokemons(offset: offset);
   }
 }

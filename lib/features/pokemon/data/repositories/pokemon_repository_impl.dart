@@ -10,8 +10,8 @@ class PokemonRepositoryImpl implements PokemonRepository {
   PokemonRepositoryImpl(this.dataSource);
 
   @override
-  Future<List<Pokemon>> getPokemons() async {
-    final results = await dataSource.getPokemons();
+  Future<List<Pokemon>> getPokemons({required int offset}) async {
+    final results = await dataSource.getPokemons(offset: offset);
 
     List<Pokemon> pokemons = [];
 

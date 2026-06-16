@@ -5,9 +5,9 @@ class PokemonRemoteDataSource {
 
   PokemonRemoteDataSource(this.dio);
 
-  Future<List<dynamic>> getPokemons() async {
+  Future<List<dynamic>> getPokemons({required int offset}) async {
     try {
-      final response = await dio.get('/pokemon?limit=20');
+      final response = await dio.get('/pokemon?limit=20&offset=$offset');
       return response.data['results'];
     } on DioException catch (e) {
       throw _handleDioError(e);

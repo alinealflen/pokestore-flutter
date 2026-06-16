@@ -1,5 +1,5 @@
 import '../entities/pokemon.dart';
 
 abstract class PokemonRepository {
-  Future<List<Pokemon>> getPokemons();
+  Future<List<Pokemon>> getPokemons({required int offset});
 }
