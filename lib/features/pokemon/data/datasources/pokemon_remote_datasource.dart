@@ -38,4 +38,14 @@ class PokemonRemoteDataSource {
 
     return Exception('Erro desconhecido');
   }
+
+  Future<List<dynamic>> getPokemonNames() async {
+    try {
+      final response = await dio.get('/pokemon?limit=2000');
+
+      return response.data['results'];
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    }
+  }
 }

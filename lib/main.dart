@@ -6,6 +6,7 @@ import 'package:pokestore/features/pokemon/domain/usecases/get_pokemons.dart';
 import 'package:pokestore/features/pokemon/presentation/providers/pokemon_provider.dart';
 import 'package:provider/provider.dart';
 import 'features/pokemon/presentation/pages/pokemon_page.dart';
+import 'package:pokestore/features/pokemon/domain/usecases/get_pokemons_names.dart';
 
 void main() {
   final dio = Dio(
@@ -18,11 +19,14 @@ void main() {
 
   final dataSource = PokemonRemoteDataSource(dio);
   final repository = PokemonRepositoryImpl(dataSource);
+
   final getPokemons = GetPokemons(repository);
+  final getPokemonsNames = GetPokemonNames(repository);
 
   runApp(
     ChangeNotifierProvider(
-      create: (_) => PokemonProvider(getPokemons)..fetchPokemons(),
+      create: (_) =>
+          PokemonProvider(getPokemons, getPokemonsNames)..fetchPokemons(),
       child: const MyApp(),
     ),
   );

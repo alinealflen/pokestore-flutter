@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:pokestore/features/pokemon/domain/usecases/get_pokemons_names.dart';
 import 'dart:collection';
 import '../../domain/entities/pokemon.dart';
 import '../../domain/usecases/get_pokemons.dart';
 
 class PokemonProvider extends ChangeNotifier {
   final GetPokemons getPokemons;
+  final GetPokemonNames getPokemonNames;
 
-  PokemonProvider(this.getPokemons);
+  PokemonProvider(this.getPokemons, this.getPokemonNames);
 
   final List<Pokemon> _pokemons = [];
+  final List<String> _pokemonNames = [];
 
   UnmodifiableListView<Pokemon> get pokemons => UnmodifiableListView(_pokemons);
+  UnmodifiableListView<String> get pokemonNames =>
+      UnmodifiableListView(_pokemonNames);
 
   bool _isLoading = false;
-
-  bool get isLoading => _isLoading;
 
   String? _errorMessage;
 
@@ -24,7 +27,13 @@ class PokemonProvider extends ChangeNotifier {
 
   bool _isLoadingMore = false;
 
+  String _search = '';
+
+  bool get isLoading => _isLoading;
+
   String? get errorMessage => _errorMessage;
+
+  String get search => _search;
 
   bool get hasMore => _hasMore;
 
@@ -44,6 +53,8 @@ class PokemonProvider extends ChangeNotifier {
       _pokemons
         ..clear()
         ..addAll(result);
+
+      _offset += 20;
     } catch (e) {
       _errorMessage = e.toString();
     }
@@ -76,5 +87,37 @@ class PokemonProvider extends ChangeNotifier {
     _isLoadingMore = false;
 
     notifyListeners();
+  }
+
+  void setSearch(String value) {
+    _search = value.toLowerCase();
+
+    notifyListeners();
+  }
+
+  List<Pokemon> get filteredPokemons {
+    if (_search.isEmpty) {
+      return _pokemons;
+    }
+
+    return _pokemons.where((pokemon) {
+      return pokemon.name.toLowerCase().contains(_search);
+    }).toList();
+  }
+
+  Future<void> loadPokemonNames() async {
+    try {
+      final names = await getPokemonNames();
+
+      _pokemonNames
+        ..clear()
+        ..addAll(names);
+
+      notifyListeners();
+    } catch (e) {
+      _errorMessage = e.toString();
+
+      notifyListeners();
+    }
   }
 }

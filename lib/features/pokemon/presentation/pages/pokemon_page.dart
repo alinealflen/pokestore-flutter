@@ -45,21 +45,40 @@ class _PokemonPageState extends State<PokemonPage> {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Pokestore')),
-      body: GridView.builder(
-        controller: _scrollController,
-        padding: const EdgeInsets.all(12),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 1.3,
-          crossAxisSpacing: 12,
-          mainAxisSpacing: 12,
-        ),
-        itemCount: provider.pokemons.length,
-        itemBuilder: (context, index) {
-          final pokemon = provider.pokemons[index];
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: TextField(
+              onChanged: provider.setSearch,
+              decoration: const InputDecoration(
+                hintText: 'Buscar Pokémon...',
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ),
 
-          return PokemonCard(pokemon: pokemon);
-        },
+          Expanded(
+            child: GridView.builder(
+              controller: _scrollController,
+              padding: const EdgeInsets.all(12),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 1.3,
+                crossAxisSpacing: 12,
+                mainAxisSpacing: 12,
+              ),
+              itemCount: provider.filteredPokemons.length,
+
+              itemBuilder: (context, index) {
+                final pokemon = provider.filteredPokemons[index];
+
+                return PokemonCard(pokemon: pokemon);
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
