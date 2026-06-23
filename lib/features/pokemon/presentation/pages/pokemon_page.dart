@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokestore/features/pokemon/presentation/pages/pokemon_detail_page.dart';
 import 'package:pokestore/features/pokemon/presentation/widgets/pokemon_card.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +13,7 @@ class PokemonPage extends StatefulWidget {
 
 class _PokemonPageState extends State<PokemonPage> {
   final ScrollController _scrollController = ScrollController();
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
@@ -28,6 +30,7 @@ class _PokemonPageState extends State<PokemonPage> {
   @override
   void dispose() {
     _scrollController.dispose();
+    _searchController.dispose();
     super.dispose();
   }
 
@@ -50,6 +53,7 @@ class _PokemonPageState extends State<PokemonPage> {
           Padding(
             padding: const EdgeInsets.all(12),
             child: TextField(
+              controller: _searchController,
               onChanged: provider.setSearch,
               decoration: const InputDecoration(
                 hintText: 'Buscar Pokémon...',
@@ -58,7 +62,35 @@ class _PokemonPageState extends State<PokemonPage> {
               ),
             ),
           ),
+          if (provider.search.isNotEmpty)
+            SizedBox(
+              height: 200,
+              child: ListView.builder(
+                itemCount: provider.filteredPokemonNames.length,
+                itemBuilder: (context, index) {
+                  final name = provider.filteredPokemonNames[index];
 
+                  return ListTile(
+                    title: Text(name),
+                    onTap: () async {
+                      final pokemon = await provider.searchPokemon(name);
+
+                      provider.clearSearch();
+                      _searchController.clear();
+
+                      if (!mounted) return;
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => PokemonDetailPage(pokemon: pokemon),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
           Expanded(
             child: GridView.builder(
               controller: _scrollController,
@@ -69,10 +101,10 @@ class _PokemonPageState extends State<PokemonPage> {
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
               ),
-              itemCount: provider.filteredPokemons.length,
+              itemCount: provider.pokemons.length,
 
               itemBuilder: (context, index) {
-                final pokemon = provider.filteredPokemons[index];
+                final pokemon = provider.pokemons[index];
 
                 return PokemonCard(pokemon: pokemon);
               },

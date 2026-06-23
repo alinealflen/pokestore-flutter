@@ -48,4 +48,14 @@ class PokemonRemoteDataSource {
       throw _handleDioError(e);
     }
   }
+
+  Future<Map<String, dynamic>> getPokemonByName(String name) async {
+    try {
+      final response = await dio.get('/pokemon/$name');
+
+      return response.data;
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    }
+  }
 }

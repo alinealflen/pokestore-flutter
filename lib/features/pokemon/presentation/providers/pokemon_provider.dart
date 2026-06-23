@@ -3,12 +3,18 @@ import 'package:pokestore/features/pokemon/domain/usecases/get_pokemons_names.da
 import 'dart:collection';
 import '../../domain/entities/pokemon.dart';
 import '../../domain/usecases/get_pokemons.dart';
+import '../../domain/usecases/get_pokemon_by_name.dart';
 
 class PokemonProvider extends ChangeNotifier {
   final GetPokemons getPokemons;
   final GetPokemonNames getPokemonNames;
+  final GetPokemonByName getPokemonByName;
 
-  PokemonProvider(this.getPokemons, this.getPokemonNames);
+  PokemonProvider(
+    this.getPokemons,
+    this.getPokemonNames,
+    this.getPokemonByName,
+  );
 
   final List<Pokemon> _pokemons = [];
   final List<String> _pokemonNames = [];
@@ -95,20 +101,15 @@ class PokemonProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Pokemon> get filteredPokemons {
-    if (_search.isEmpty) {
-      return _pokemons;
-    }
+  void clearSearch() {
+    _search = '';
 
-    return _pokemons.where((pokemon) {
-      return pokemon.name.toLowerCase().contains(_search);
-    }).toList();
+    notifyListeners();
   }
 
   Future<void> loadPokemonNames() async {
     try {
       final names = await getPokemonNames();
-
       _pokemonNames
         ..clear()
         ..addAll(names);
@@ -119,5 +120,20 @@ class PokemonProvider extends ChangeNotifier {
 
       notifyListeners();
     }
+  }
+
+  List<String> get filteredPokemonNames {
+    if (_search.isEmpty) {
+      return [];
+    }
+
+    return _pokemonNames
+        .where((name) => name.toLowerCase().contains(_search))
+        .take(20)
+        .toList();
+  }
+
+  Future<Pokemon> searchPokemon(String name) async {
+    return await getPokemonByName(name);
   }
 }

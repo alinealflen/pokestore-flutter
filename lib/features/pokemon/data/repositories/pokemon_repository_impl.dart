@@ -32,4 +32,13 @@ class PokemonRepositoryImpl implements PokemonRepository {
 
     return results.map<String>((pokemon) => pokemon['name'] as String).toList();
   }
+
+  @override
+  Future<Pokemon> getPokemonByName(String name) async {
+    final detail = await dataSource.getPokemonByName(name);
+
+    final model = PokemonModel.fromJson(detail);
+
+    return PokemonMapper.toEntity(model);
+  }
 }

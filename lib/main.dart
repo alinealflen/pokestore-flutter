@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:pokestore/features/pokemon/data/datasources/pokemon_remote_datasource.dart';
 import 'package:pokestore/features/pokemon/data/repositories/pokemon_repository_impl.dart';
+import 'package:pokestore/features/pokemon/domain/usecases/get_pokemon_by_name.dart';
 import 'package:pokestore/features/pokemon/domain/usecases/get_pokemons.dart';
 import 'package:pokestore/features/pokemon/presentation/providers/pokemon_provider.dart';
 import 'package:provider/provider.dart';
@@ -22,11 +23,14 @@ void main() {
 
   final getPokemons = GetPokemons(repository);
   final getPokemonsNames = GetPokemonNames(repository);
+  final getPokemonByName = GetPokemonByName(repository);
 
   runApp(
     ChangeNotifierProvider(
       create: (_) =>
-          PokemonProvider(getPokemons, getPokemonsNames)..fetchPokemons(),
+          PokemonProvider(getPokemons, getPokemonsNames, getPokemonByName)
+            ..fetchPokemons()
+            ..loadPokemonNames(),
       child: const MyApp(),
     ),
   );
