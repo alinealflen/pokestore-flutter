@@ -34,11 +34,29 @@ Os dados são obtidos através da PokeAPI e utilizados para simular um catálogo
 ```text
 lib/
 ├── core/
+│   ├── constants/
+│   ├── services/
+│   ├── theme/
+│   └── utils/
+│
 ├── features/
 │   └── pokemon/
 │       ├── data/
+│       │   ├── datasources/
+│       │   ├── mappers/
+│       │   ├── models/
+│       │   └── repositories/
+│       │
 │       ├── domain/
+│       │   ├── entities/
+│       │   ├── repositories/
+│       │   └── usecases/
+│       │
 │       └── presentation/
+│           ├── pages/
+│           ├── providers/
+│           └── widgets/
+│
 └── main.dart
 ```
 
