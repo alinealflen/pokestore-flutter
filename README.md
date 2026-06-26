@@ -21,10 +21,11 @@ Os dados são obtidos através da PokeAPI e utilizados para simular um catálogo
 
 - [x] Criação do projeto
 - [x] Configuração do GitHub
-- [ ] Consumo da PokeAPI
-- [ ] Listagem de produtos
-- [ ] Tela de detalhes
-- [ ] Busca de produtos
+- [x] Consumo da PokeAPI
+- [x] Listagem de produtos
+- [x] Tela de detalhes
+- [x] Busca de produtos
+- [ ] Favoritos
 - [ ] Tratamento de erros
 - [ ] Gerenciamento de estado com Provider
 
